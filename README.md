@@ -20,9 +20,21 @@ Or install it yourself as:
 
 ## Usage
 
-Before you get the distance between two points, you must pass the detailed address of two points as a parameter.
+#Before you get the distance between two points, you must pass the detailed address of two points as a parameter.
+
+#For example: EstimateDistance.direct_calculate_distance(former_address,latter_address)
+
+#Then,you can get the distance between two points
+
+## Update(version 0.0.2)
+Version one, the gem is used only 6000 times a day. In order to enhance the number of use。
+
+Version two, the user can go to the Baidu Developer Center to apply for their own ak key, and then use the corresponding gem method to complete your work。
+
+As with version one, you can choose to pass in ak or not.
 
 For example: EstimateDistance.direct_calculate_distance(former_address,latter_address)
+OR EstimateDistance.direct_calculate_distance(former_address,latter_address,your_ak)
 
 Then,you can get the distance between two points
 
