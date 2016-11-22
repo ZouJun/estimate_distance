@@ -18,13 +18,13 @@ Or install it yourself as:
 
     $ gem install estimate_distance
 
-## Usage
+## Usage(version 0.0.1)
 
-#Before you get the distance between two points, you must pass the detailed address of two points as a parameter.
+Before you get the distance between two points, you must pass the detailed address of two points as a parameter.
 
-#For example: EstimateDistance.direct_calculate_distance(former_address,latter_address)
+For example: EstimateDistance.direct_calculate_distance(former_address,latter_address)
 
-#Then,you can get the distance between two points
+Then,you can get the distance between two points
 
 ## Update(version 0.0.2)
 Version one, the gem is used only 6000 times a day. In order to enhance the number of use。
