@@ -10,13 +10,22 @@ module EstimateDistance
   #   [real_address.city.try(:name), real_address.district.try(:name), real_address.address].compact.join
   # end
 
-  def self.location_address_info(address)
-    params = {address: address, output: 'json', ak: 'dAYeNt1licEwUDKoyeNBskBQjHRKDDmb'}
-    result = RestClient.get('http://api.map.baidu.com/geocoder/v2/', params: params)
-    data = JSON(result)
-    data['result']['location']
-  rescue
-    {}
+  def self.location_address_info(address, ak)
+    if ak == ''
+      params = {address: address, output: 'json', ak: 'dAYeNt1licEwUDKoyeNBskBQjHRKDDmb'}
+    else
+      params = {address: address, output: 'json', ak: ak}
+    end
+    request_info(params)
+  end
+
+  def self.request_info(params)
+    begin
+      result = RestClient.get('http://api.map.baidu.com/geocoder/v2/', params: params)
+      JSON(result)
+    rescue Exception=> e
+      return false
+    end
   end
 
   def self.get_rad(d)
@@ -34,27 +43,20 @@ module EstimateDistance
     return (s/1000).round(2)
   end
 
-  # def self.calculate_distance(former_address, latter_address)
-  #   shop_detail_address = real_address(former_address)
-  #   shop_result = location_address_info(shop_detail_address)
-  #   puts shop_result
-  #   lat1 = shop_result['lat']
-  #   lng1 = shop_result['lng']
-  #   user_result = location_address_info(latter_address)
-  #   lat2 = user_result['lat']
-  #   lng2 = user_result['lng']
-  #   distance = get_great_circle_distance(lat1, lng1, lat2, lng2)
-  #   distance
-  # end
+  def self.direct_calculate_distance(former_address, latter_address, ak='')
+    former_result = location_address_info(former_address, ak)
+    latter_result = location_address_info(latter_address, ak)
 
-  def self.direct_calculate_distance(former_address, latter_address)
-    former_result = location_address_info(former_address)
-    lat1 = former_result['lat']
-    lng1 = former_result['lng']
-    latter_result = location_address_info(latter_address)
-    lat2 = latter_result['lat']
-    lng2 = latter_result['lng']
-    distance = circle_distance(lat1, lng1, lat2, lng2)
-    distance
+    if former_result['status'] == 0 && latter_result['status'] == 0
+      lat1 = former_result['result']['location']['lat']
+      lng1 = former_result['result']['location']['lng']
+
+      lat2 = latter_result['result']['location']['lat']
+      lng2 = latter_result['result']['location']['lng']
+      circle_distance(lat1, lng1, lat2, lng2)
+    else
+      return { status: -1 ,message: 'ak有误或超出调用次数'}
+    end
   end
+
 end

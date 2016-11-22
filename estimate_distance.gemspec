@@ -5,7 +5,7 @@ require 'estimate_distance'
 
 Gem::Specification.new do |s|
   s.name          = "estimate_distance"
-  s.version       = '0.0.1'
+  s.version       = '0.0.2'
   s.authors       = ["ZouJun"]
   s.email         = ["953986113@qq.com"]
   s.summary       = "estimate distance"
